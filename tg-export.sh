@@ -9,6 +9,7 @@ output=
 driver=collapse
 flatten=false
 numbered=false
+allbranches=false
 
 
 ## Parse options
@@ -16,6 +17,8 @@ numbered=false
 while [ -n "$1" ]; do
 	arg="$1"; shift
 	case "$arg" in
+	-a|--all)
+		allbranches=true;;
 	-b)
 		branches="$1"; shift;;
 	--flatten)
@@ -30,7 +33,7 @@ while [ -n "$1" ]; do
 	--linearize)
 		driver=linearize;;
 	-*)
-		echo "Usage: tg [...] export ([--collapse] NEWBRANCH | [-b BRANCH1,BRANCH2...] --quilt DIRECTORY | --linearize NEWBRANCH)" >&2
+		echo "Usage: tg [...] export ([--collapse] NEWBRANCH | [--all | -b BRANCH1,BRANCH2...] --quilt DIRECTORY | --linearize NEWBRANCH)" >&2
 		exit 1;;
 	*)
 		[ -z "$output" ] || die "output already specified ($output)"
@@ -49,7 +52,13 @@ done
 [ "$driver" = "quilt" ] || ! "$flatten" ||
 	die "--flatten works only with the quilt driver"
 
-if [ -z "$branches" ]; then
+[ "$driver" = "quilt" ] || ! "$allbranches" ||
+	die "--all works only with the quilt driver";
+
+[ -z "$branches" ] || ! "$allbranches" ||
+	die "-b conflict with --all option";
+
+if [ -z "$branches" ] && ! "$allbranches"; then
 	# this check is only needed when no branches have been passed
 	name="$(git symbolic-ref HEAD | sed 's#^refs/heads/##')"
 	base_rev="$(git rev-parse --short --verify "refs/top-bases/$name" 2>/dev/null)" ||
@@ -281,7 +290,17 @@ driver()
 
 # Call driver on all the branches - this will happen
 # in topological order.
-if [ -z "$branches" ]; then
+if "$allbranches" ; then
+	git for-each-ref refs/top-bases |
+		while read rev type ref; do
+			name="${ref#refs/top-bases/}"
+			if branch_annihilated "$name"; then
+				continue;
+			fi;
+			recurse_deps driver "$name"
+			(_ret=0; _dep="$name"; _name=""; _dep_is_tgish=1; driver)
+		done
+elif [ -z "$branches" ]; then
 	recurse_deps driver "$name"
 	(_ret=0; _dep="$name"; _name=""; _dep_is_tgish=1; driver)
 else
