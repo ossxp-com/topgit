@@ -1,0 +1,33 @@
+This package was debianized by martin f. krafft <madduck@debian.org> on
+Mon, 11 Aug 2008 17:32:48 -0300.
+
+It was downloaded from <http://repo.or.cz/w/topgit.git>
+
+Upstream Author:
+
+    Petr Baudis <pasky@suse.cz>
+
+Copyright:
+
+    Copyright © 2008 Petr Baudis <pasky@suse.cz>
+
+License:
+
+    This package is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License version 2 as
+    published by the Free Software Foundation.
+
+    This package is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this package; if not, write to the Free Software
+    Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
+
+On Debian systems, the complete text of the GNU General
+Public License v2 can be found in `/usr/share/common-licenses/GPL-2'.
+
+The Debian packaging is (C) 2008-9, martin f. krafft <madduck@debian.org> and
+is licensed under the GPLv2, see above.

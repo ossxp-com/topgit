@@ -1,0 +1,24 @@
+Source: topgit
+Section: devel
+Priority: optional
+Maintainer: Debian TopGit maintainers <pkg-topgit@teams.debian.net>
+Uploaders: martin f. krafft <madduck@debian.org>, Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Build-Depends: debhelper (>= 6), quilt
+Standards-Version: 3.8.1
+Homepage: http://repo.or.cz/w/topgit.git
+Vcs-Git: git://git.debian.org/git/collab-maint/topgit.git
+Vcs-Browser: http://git.debian.org/?p=collab-maint/topgit.git
+
+Package: topgit
+Architecture: all
+Depends: git-core
+Suggests: git-email, make, quilt
+Description: a Git patch queue manager
+ TopGit manages a patch queue using Git topic branches, one patch per
+ branch. It allows for patch dependencies and can thus manage
+ non-linear patch series.
+ .
+ TopGit is a minimal layer on top of Git, which does not limit use of
+ Git's functionality (such as the index). It rigorously keeps history
+ until a patch is accepted upstream. It is also fully usable across
+ distributed repositories.

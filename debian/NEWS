@@ -1,0 +1,16 @@
+topgit (0.5-1) unstable; urgency=low
+
+  The Debian topgit package now provides a Makefile snippet for inclusion from
+  debian/rules, to facilitate the creation of a quilt series from TopGit
+  branches during the package build (and cleanup) step. Please refer to
+  /usr/share/doc/topgit/HOWTO-tg2quilt.gz and /usr/share/topgit/tg2quilt.mk
+  for more information. You can see it in action in the topgit package itself.
+
+  To stop the proliferation of TopGit boilerplate, which could make later
+  maintenance and changes more difficult, you are encouraged to make use of
+  the snippet.
+
+  If you have ideas for other features, I'd be happy to incorporate them.
+  Patches most welcome.
+
+ -- martin f. krafft <madduck@debian.org>  Wed, 19 Nov 2008 15:23:52 +0100

@@ -1,0 +1,144 @@
+Using TopGit to generate quilt series for Debian packaging
+----------------------------------------------------------
+
+You have been referred to this document probably because a source package you
+are working on uses TopGit to generate a quilt series to encapsulate
+differences between upstream and the source code used for the Debian package.
+
+Please make sure that you have a recent version of TopGit (>= 0.5) installed
+before trying any of this.
+
+Where appropriate, the examples use the topgit package itself to illustrate
+the use. I trust you to be able to make the appropriate amendments for your
+situation.
+
+1. Cloning the repository
+~~~~~~~~~~~~~~~~~~~~~~~~~
+Cloning a TopGit repository requires an additional step to normal Git cloning:
+
+1. git clone ssh://git.debian.org/git/collab-maint/topgit.git
+2. cd topgit
+3. tg remote --populate origin
+
+You can also use the debcheckout tool from the devscripts package:
+
+  debcheckout topgit
+
+which will do all the above for you automatically.
+
+Branches in use
+'''''''''''''''
+The following branches are in use in the topgit package. You are free to
+deviate from this set for the package you are working on, but then please
+document it accordingly in your README.source.
+
+- upstream: tracks the upstream Git repository
+- fixes/*: patches fixing problems with upstream
+- features/*: patches providing new features, targetted upstream
+- master: the main Debianisation branch
+- debian/*: Debian-specific patches
+
+upstream and master are regular Git branches, while the others are TopGit
+branches. The reason why master is not a TopGit branch itself is so that it's
+possible to export all TopGit-managed branches into the quilt series, without
+having to make an exception for master.
+
+2. Developing a new feature
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+If you want to develop a new feature (or bug fix), first consider whether the
+patch is intended to go upstream or is a Debian-specific change. Choose the
+namespace accordingly and base it off upstream or master respectively. If the
+patch depends on another patch, obviously base it off the respective TopGit
+branch.
+
+The following are the steps required to add a feature branch/patch:
+
+1. tg create features/new-feature upstream
+   - or -
+   tg create debian/new-debian-stuff master
+
+2. edit .topmsg and make the subject line be a short description, optionally
+   add a longer description to the body
+
+3. git add .topmsg && git commit
+
+3. Obtaining the upstream tarball
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+The upstream tarball for the topgit package $VERSION can be obtained using
+pristine-tar:
+
+  pristine-tar checkout ../topgit_$VERSION.orig.tar.gz
+
+4. Building the package
+~~~~~~~~~~~~~~~~~~~~~~~
+Building the package is trivial, thanks to the inclusion of the tg2quilt.mk
+snippet at the top of debian/rules.
+
+Unless you set the TG_BRANCHES variable before the include statement (or when
+you invoke debian/rules (or make), tg2quilt will simply export all TopGit
+branches into the quilt series. You can set the variable TG_BRANCHES to
+a space- or comma-separated list (but not comma and space) of feature branches
+to export, e.g.:
+
+  TG_BRANCHES := branch1,branch2
+  TG_BRANCHES := 'branch3 branch4 branch 5'
+
+Building the package requires no additional steps over other Debian packages.
+
+Since it is currently not possible to access TopGit branches for previous
+versions of a package (#500656), it is a good idea to maintain a build branch,
+into which you merge the master (Debianisation) branch whenever making a new
+release, and where you simply track the contents of the debian/patches
+directory. This can conveniently become the branch from which you build:
+
+1. git checkout build
+2. git merge master
+3. ./debian/rules tg-cleanexport
+4. git add debian/patches
+5. git commit -m'preparing $VERSION'
+6. build, test, upload, tag ('debian/topgit-$VERSION')
+
+TODO: add a debian/NEWS entry to get people to switch to using this approach.
+
+5. Importing a new upstream version
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+To import a new upstream, update the remote, merge the tag you want to merge
+into the master branch, ideally together with an update to debian/changelog,
+then update all TopGit branches:
+
+1. git remote update
+2. git checkout master
+3. git merge <new-upstream-tag>
+
+Now proceed as in the next step.
+
+6. Making changes to the master branch
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+If you make changes to the master branch (the "debianisation" branch), follow
+this procedure:
+
+1. tg summary
+2. for every branch that is prefixed with 'D' in the output:
+     git checkout $BRANCH && tg update
+
+7. Building an upstream tarball
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+If you are using pristine-tar, the following can be used to commit an
+upstream tarball to the repository. It makes sense to rename it according to
+the Debian-standard package_version.orig.tar.gz convention first.
+
+1. pristine-tar commit ../topgit_$VERSION.orig.tar.gz <upstream-tag>
+
+If upstream does not provide tarballs, you can create the orig.tar.gz file and
+commit is as follows:
+
+1. upstream_tag="topgit-$VERSION"
+2. git archive --prefix="$upstream_tag/" "$upstream_tag" |
+	gzip -9 > ../"${upstream_tag//-/_}.orig.tar.gz"
+3. pristine-tar commit ../"${upstream_tag//-/_}.orig.tar.gz" "$upstream_tag"
+
+
+All comments and suggestions are welcome, especially those pertaining to
+auto-generating debian/changelog from commit logs.
+
+ -- martin f. krafft <madduck@debian.org>  Wed, 19 Nov 2008 15:16:03 +0100

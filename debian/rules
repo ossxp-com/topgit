@@ -1,0 +1,49 @@
+#!/usr/bin/make -f
+
+# Uncomment this to turn on verbose mode.
+#export DH_VERBOSE=1
+
+TG_BRANCHES="debian/locations"
+
+include /usr/share/quilt/quilt.make
+include debian/tg2quilt.mk
+
+build: build-stamp
+build-stamp: patch
+	dh_testdir
+	$(MAKE) prefix=/usr
+	touch $@
+
+clean: unpatch
+	dh_testdir
+	dh_testroot
+	rm -f build-stamp
+	$(MAKE) clean
+	dh_clean
+
+install: build
+	dh_testdir
+	dh_testroot
+	dh_clean -k
+	dh_installdirs
+	$(MAKE) DESTDIR=$(CURDIR)/debian/topgit prefix=/usr install
+	rm -f $(wildcard $(CURDIR)/debian/topgit/usr/share/topgit/*.txt)
+	dh_install
+	install -m644 contrib/tg-completion.bash debian/topgit/etc/bash_completion.d/topgit
+
+
+binary-arch: build install
+binary-indep: build install
+	dh_testdir
+	dh_testroot
+	dh_installchangelogs
+	dh_installdocs
+	dh_compress
+	dh_fixperms
+	dh_installdeb
+	dh_gencontrol
+	dh_md5sums
+	dh_builddeb
+
+binary: binary-indep binary-arch
+.PHONY: build clean binary-indep binary-arch binary install configure

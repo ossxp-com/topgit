@@ -1,0 +1,14 @@
+Building topgit for Debian
+--------------------------
+
+The topgit source package uses quilt to apply and remove its patches. Please
+refer to /usr/share/doc/quilt/README.source for information about how to use
+quilt for source packages.
+
+The quilt series is generated from the Git repository, using TopGit itself.
+This process is documented in /usr/share/doc/topgit/HOWTO-tg2quilt.gz .
+
+The topgit packages uses the branch layout described in the aforementioned
+document.
+
+ -- martin f. krafft <madduck@debian.org>  Wed, 19 Nov 2008 15:17:09 +0100

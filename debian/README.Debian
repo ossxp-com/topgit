@@ -1,0 +1,7 @@
+topgit for Debian
+-----------------
+
+TopGit is itself managed with TopGit. Per Debian policy, have a look into
+README.source to see how this is done.
+
+ -- martin f. krafft <madduck@debian.org>  Mon, 11 Aug 2008 17:32:48 -0300

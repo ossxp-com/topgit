@@ -1,0 +1,71 @@
+topgit (0.8-1+ossxp1) unstable; urgency=low
+
+  * Add --all options for tg export --quilt
+
+ -- Jiang Xin <jiangxin@ossxp.com>  Sun, 20 Dec 2009 09:49:43 +0800
+
+topgit (0.8-1) unstable; urgency=low
+
+  [ Uwe Kleine-König ]
+  * Update Debian policy version (no changes needed).
+  * New upstream release (closes: #516188)
+
+  [ martin f. krafft ]
+  * Provide default values for variables used in tg2quilt.mk; thanks Frédéric
+    Brière (closes: #526392).
+
+ -- Uwe Kleine-König <u.kleine-koenig@pengutronix.de>  Mon, 16 Mar 2009 08:52:08 +0100
+
+topgit (0.7-1) unstable; urgency=low
+
+  [ martin f. krafft ]
+  * Provide new tg2quilt target tg-cleanexport, which recreates debian/patches
+    in one step.
+  * Actually install the bash completion script; thanks to Uwe Kleine-König
+    for noticing and providing a patch (closes: #499072).
+  * Add a note to tg2quilt.mk's header explaining the need to soft-include
+    tg2quilt.mk, to avoid the topgit build-dependency.
+  * Suggest the git-email package (closes: #508079).
+  * Suggest the make and quilt packages.
+  * Fix GPL version in copyright file (closes: #514157).
+  * Deprecate tg2quilt.mk's $PATCHES_DIR variable and put a warning in place
+    to point people to $QUILT_PATCH_DIR instead.
+  * change maintainer to pkg-topgit@teams.debian.net, add Uwe Kleine-König to
+    uploaders.
+
+  [ Uwe Kleine-König ]
+  * new upstream release topgit-0.7
+    - fixes Resumed create ignores branches contained in resolution
+      (Closes: #513018)
+
+ -- Uwe Kleine-König <u.kleine-koenig@pengutronix.de>  Thu, 05 Mar 2009 12:09:31 +0100
+
+topgit (0.5-1) unstable; urgency=low
+
+  * New upstream release (closes: #500273, #505266).
+  * Upstream added bash completion (closes: #499072).
+  * Provide the tg2quilt Makefile snippet for inclusion from debian/rules to
+    facilitate generation of the quilt series from TopGit branches. See
+    /usr/share/doc/topgit/HOWTO-tg2quilt.gz for details; thanks to Stefano
+    Zacchiroli for the idea that led to this (closes: #501991, #506072).
+  * Update the README.source workflow to refer to HOWTO-tg2quilt.
+  * Add a NEWS file to make sure people get notified of this change.
+
+ -- martin f. krafft <madduck@debian.org>  Fri, 26 Sep 2008 19:55:58 +0200
+
+topgit (0.3-1) unstable; urgency=low
+
+  * New upstream release (closes: #498559).
+  * Retire fixes/destdir branch as upstream does it better; amend debian/rules
+    to set $prefix instead of $PREFIX.
+  * Updated README.source to reflect TopGit remote handling and slight changes
+    to the process.
+
+ -- martin f. krafft <madduck@debian.org>  Wed, 10 Sep 2008 09:31:03 +0100
+
+topgit (0.2-1) unstable; urgency=low
+
+  * Initial release (closes: #494710).
+
+ -- martin f. krafft <madduck@debian.org>  Mon, 11 Aug 2008 17:32:48 -0300
+
