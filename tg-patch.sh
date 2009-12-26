@@ -52,11 +52,12 @@ echo
 
 # Evil obnoxious hack to work around the lack of git diff --exclude
 git_is_stupid="$(mktemp -t tg-patch-changes.XXXXXX)"
-git diff --name-only $diff_opts "$base_rev" ${diff_committed_only:+"$name"} -- |
+cdup="$(git rev-parse --show-cdup)"
+git diff --name-only $diff_opts "$base_rev" ${diff_committed_only:+"$name"} -- $cdup |
 	fgrep -vx ".topdeps" |
 	fgrep -vx ".topmsg" >"$git_is_stupid" || : # fgrep likes to fail randomly?
 if [ -s "$git_is_stupid" ]; then
-	cat "$git_is_stupid" | xargs git diff --patch-with-stat $diff_opts "$base_rev" ${diff_committed_only:+"$name"} --
+	cat "$git_is_stupid" | xargs -i{} git diff --patch-with-stat $diff_opts "$base_rev" ${diff_committed_only:+"$name"} -- $cdup{}
 else
 	echo "No changes."
 fi
