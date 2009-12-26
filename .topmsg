@@ -1,6 +1,13 @@
-From: Jiang Xin <worldhello.net@gmail.com>
+From: Jiang Xin <jiangxin@ossxp.com>
 Subject: [PATCH] t/fast_tg_summary
 
-<patch description>
+Show topgit branch without annihilate check for terse mode, which will increate bash completion speed.
 
-Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
+Info: Many tg command's bash completion calling __tg_topics to show topgit branches.
+    __tg_topics ()
+    {
+        tg summary -t
+    }
+
+
+Signed-off-by: Jiang Xin <jiangxin@ossxp.com>
