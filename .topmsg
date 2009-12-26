@@ -1,6 +1,6 @@
-From: Jiang Xin <worldhello.net@gmail.com>
+From: Jiang Xin <jiangxin@ossxp.com>
 Subject: [PATCH] t/tg_completion_bugfix
 
-<patch description>
+Bash completion bugfix: git-core's completion change __git_find_subcommand to __git_find_on_cmdline.
 
-Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
+Signed-off-by: Jiang Xin <jiangxin@ossxp.com>
