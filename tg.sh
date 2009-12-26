@@ -272,8 +272,8 @@ do_help()
 		setup_pager
 		@cmddir@/tg-$1 -h 2>&1 || :
 		echo
-		if [ -r "@sharedir@/tg-$1.txt" ] ; then
-			cat "@sharedir@/tg-$1.txt"
+		if [ -r "@docdir@/tg-$1.txt" ] ; then
+			cat "@docdir@/tg-$1.txt"
 		fi
 	else
 		echo "`basename $0`: no help for $1" 1>&2

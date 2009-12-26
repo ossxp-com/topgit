@@ -1,7 +1,7 @@
 prefix ?= $(HOME)
 bindir := $(prefix)/bin
-cmddir := $(prefix)/libexec/topgit
-sharedir := $(prefix)/share/topgit
+cmddir := $(prefix)/share/topgit
+docdir := $(prefix)/share/doc/topgit
 hooksdir := $(cmddir)/hooks
 
 
@@ -19,7 +19,7 @@ tg $(commands_out) $(hooks_out): % : %.sh Makefile
 	@sed -e 's#@cmddir@#$(cmddir)#g;' \
 		-e 's#@hooksdir@#$(hooksdir)#g' \
 		-e 's#@bindir@#$(bindir)#g' \
-		-e 's#@sharedir@#$(sharedir)#g' \
+		-e 's#@docdir@#$(docdir)#g' \
 		$@.sh >$@+ && \
 	chmod +x $@+ && \
 	mv $@+ $@
@@ -36,8 +36,8 @@ install:: all
 	install $(commands_out) "$(DESTDIR)$(cmddir)"
 	install -d -m 755 "$(DESTDIR)$(hooksdir)"
 	install $(hooks_out) "$(DESTDIR)$(hooksdir)"
-	install -d -m 755 "$(DESTDIR)$(sharedir)"
-	install -m 644 $(help_out) "$(DESTDIR)$(sharedir)"
+	install -d -m 755 "$(DESTDIR)$(docdir)"
+	install -m 644 $(help_out) "$(DESTDIR)$(docdir)"
 
 clean::
 	rm -f tg $(commands_out) $(hooks_out) $(help_out)
