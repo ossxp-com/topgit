@@ -1,0 +1,26 @@
+From: Jiang Xin <jiangxin@ossxp.com>
+Subject: [PATCH] t/tg_completion_bugfix
+
+Bash completion bugfix: git-core's completion change __git_find_subcommand to __git_find_on_cmdline.
+
+Signed-off-by: Jiang Xin <jiangxin@ossxp.com>
+
+---
+ contrib/tg-completion.bash |    2 +-
+ 1 files changed, 1 insertions(+), 1 deletions(-)
+
+diff --git a/contrib/tg-completion.bash b/contrib/tg-completion.bash
+index 0ee233c..8b39bef 100755
+--- a/contrib/tg-completion.bash
++++ b/contrib/tg-completion.bash
+@@ -268,7 +268,7 @@ _tg_delete ()
+ _tg_depend ()
+ {
+ 	local subcommands="add"
+-	local subcommand="$(__git_find_subcommand "$subcommands")"
++	local subcommand="$(__git_find_subcommand "$subcommands" 2>/dev/null || __git_find_on_cmdline "$subcommands" 2>/dev/null)"
+ 	if [ -z "$subcommand" ]; then
+ 		__tgcomp "$subcommands"
+ 		return
+-- 
+tg: (341a371..) t/tg_completion_bugfix (depends on: tgmaster)

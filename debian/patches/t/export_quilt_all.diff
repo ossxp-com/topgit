@@ -1,0 +1,93 @@
+From: Jiang Xin <jiangxin@ossxp.com>
+Subject: [PATCH] t/export_quilt_all
+
+Option '--quilt' works with '-a | --all' parameter.
+With '--quilt', if you can pass '-a | --all' parameter, all , all branches are exported.
+
+Signed-off-by: Jiang Xin <jiangxin@ossxp.com>
+
+---
+ README       |    3 +++
+ tg-export.sh |   25 ++++++++++++++++++++++---
+ 2 files changed, 25 insertions(+), 3 deletions(-)
+
+diff --git a/README b/README
+index 495c70b..017cead 100644
+--- a/README
++++ b/README
+@@ -426,6 +426,9 @@ tg export
+ 	a comma-separated explicit list of branches to export. This
+ 	mode of operation is currently not supported with collapse.
+ 
++	With '--quilt', if you can pass '-a | --all' parameter, all
++  branches are exported.
++
+ 	In '--quilt' mode the patches are named like the originating topgit
+ 	branch.  So usually they end up in subdirectories of the output
+ 	directory.  With option '--flatten' the names are mangled such that
+diff --git a/tg-export.sh b/tg-export.sh
+index a16c290..7e035a7 100644
+--- a/tg-export.sh
++++ b/tg-export.sh
+@@ -9,6 +9,7 @@ output=
+ driver=collapse
+ flatten=false
+ numbered=false
++allbranches=false
+ 
+ 
+ ## Parse options
+@@ -16,6 +17,8 @@ numbered=false
+ while [ -n "$1" ]; do
+ 	arg="$1"; shift
+ 	case "$arg" in
++	-a|--all)
++		allbranches=true;;
+ 	-b)
+ 		branches="$1"; shift;;
+ 	--flatten)
+@@ -30,7 +33,7 @@ while [ -n "$1" ]; do
+ 	--linearize)
+ 		driver=linearize;;
+ 	-*)
+-		echo "Usage: tg [...] export ([--collapse] NEWBRANCH | [-b BRANCH1,BRANCH2...] --quilt DIRECTORY | --linearize NEWBRANCH)" >&2
++		echo "Usage: tg [...] export ([--collapse] NEWBRANCH | [--all | -b BRANCH1,BRANCH2...] --quilt DIRECTORY | --linearize NEWBRANCH)" >&2
+ 		exit 1;;
+ 	*)
+ 		[ -z "$output" ] || die "output already specified ($output)"
+@@ -49,7 +52,13 @@ done
+ [ "$driver" = "quilt" ] || ! "$flatten" ||
+ 	die "--flatten works only with the quilt driver"
+ 
+-if [ -z "$branches" ]; then
++[ "$driver" = "quilt" ] || ! "$allbranches" ||
++	die "--all works only with the quilt driver";
++
++[ -z "$branches" ] || ! "$allbranches" ||
++	die "-b conflict with --all option";
++
++if [ -z "$branches" ] && ! "$allbranches"; then
+ 	# this check is only needed when no branches have been passed
+ 	name="$(git symbolic-ref HEAD | sed 's#^refs/heads/##')"
+ 	base_rev="$(git rev-parse --short --verify "refs/top-bases/$name" 2>/dev/null)" ||
+@@ -281,7 +290,17 @@ driver()
+ 
+ # Call driver on all the branches - this will happen
+ # in topological order.
+-if [ -z "$branches" ]; then
++if "$allbranches" ; then
++	git for-each-ref refs/top-bases |
++		while read rev type ref; do
++			name="${ref#refs/top-bases/}"
++			if branch_annihilated "$name"; then
++				continue;
++			fi;
++			recurse_deps driver "$name"
++			(_ret=0; _dep="$name"; _name=""; _dep_is_tgish=1; driver)
++		done
++elif [ -z "$branches" ]; then
+ 	recurse_deps driver "$name"
+ 	(_ret=0; _dep="$name"; _name=""; _dep_is_tgish=1; driver)
+ else
+-- 
+tg: (341a371..) t/export_quilt_all (depends on: tgmaster)

@@ -1,6 +1,8 @@
 From: martin f. krafft <madduck@debian.org>
 Subject: [PATCH] make file locations Debian-compatible
 
+make file locations Debian-compatible
+
 Signed-off-by: martin f. krafft <madduck@debian.org>
 
 ---
@@ -43,7 +45,7 @@ index 3ce39a5..31cc98e 100644
  clean::
  	rm -f tg $(commands_out) $(hooks_out) $(help_out)
 diff --git a/tg.sh b/tg.sh
-index 1f259e3..a27d5ce 100644
+index 1f6d3da..8e10497 100644
 --- a/tg.sh
 +++ b/tg.sh
 @@ -272,8 +272,8 @@ do_help()
@@ -58,4 +60,4 @@ index 1f259e3..a27d5ce 100644
  	else
  		echo "`basename $0`: no help for $1" 1>&2
 -- 
-tg: (11367ce..) debian/locations (depends on: master)
+tg: (341a371..) t/debian_locations (depends on: tgmaster)

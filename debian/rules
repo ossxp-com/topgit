@@ -46,4 +46,11 @@ binary-indep: build install
 	dh_builddeb
 
 binary: binary-indep binary-arch
-.PHONY: build clean binary-indep binary-arch binary install configure
+
+debian/patches: debian/patches/
+debian/patches/:
+	rm -rf debian/patches
+	tg export --quilt --all debian/patches
+
+.PHONY: build clean binary-indep binary-arch binary install configure debian/patches/
+# vim: noet
