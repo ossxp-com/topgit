@@ -1,6 +1,6 @@
-From: Jiang Xin <worldhello.net@gmail.com>
-Subject: [PATCH] t/debian_locations
+From: martin f. krafft <madduck@debian.org>
+Subject: [PATCH] make file locations Debian-compatible
 
-<patch description>
+make file locations Debian-compatible
 
-Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
+Signed-off-by: martin f. krafft <madduck@debian.org>
