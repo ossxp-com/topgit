@@ -1,3 +1,9 @@
+topgit (0.8-1+ossxp5) unstable; urgency=low
+
+  * tg patch works under subdir.
+
+ -- Jiang Xin <jiangxin@ossxp.com>  Sat, 26 Dec 2009 18:33:26 +0800
+
 topgit (0.8-1+ossxp4) unstable; urgency=low
 
   * Bash completion speed increated for tg branch list.
