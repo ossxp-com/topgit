@@ -1,6 +1,7 @@
-From: Jiang Xin <worldhello.net@gmail.com>
+From: Jiang Xin <jiangxin@ossxp.com>
 Subject: [PATCH] t/export_quilt_all
 
-<patch description>
+Option '--quilt' works with '-a | --all' parameter.
+With '--quilt', if you can pass '-a | --all' parameter, all , all branches are exported.
 
-Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
+Signed-off-by: Jiang Xin <jiangxin@ossxp.com>

@@ -426,7 +426,7 @@ tg export
 	a comma-separated explicit list of branches to export. This
 	mode of operation is currently not supported with collapse.
 
-	With '--quilt', if you can pass '-a | all' parameter, all
+	With '--quilt', if you can pass '-a | --all' parameter, all
   branches are exported.
 
 	In '--quilt' mode the patches are named like the originating topgit
