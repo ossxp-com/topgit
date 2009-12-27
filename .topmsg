@@ -1,0 +1,6 @@
+From: Jiang Xin <jiangxin@ossxp.com>
+Subject: [PATCH] t/tg_patch_cdup
+
+tg patch can run under subdir now.
+
+Signed-off-by: Jiang Xin <jiangxin@ossxp.com>
