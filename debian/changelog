@@ -1,4 +1,4 @@
-topgit (0.8-1+ossxp5) unstable; urgency=low
+topgit (0.8-1+ossxp6) unstable; urgency=low
 
   * tg patch works under subdir.
 
