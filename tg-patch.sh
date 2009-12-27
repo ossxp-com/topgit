@@ -57,7 +57,7 @@ git diff --name-only $diff_opts "$base_rev" ${diff_committed_only:+"$name"} -- $
 	fgrep -vx ".topdeps" |
 	fgrep -vx ".topmsg" >"$git_is_stupid" || : # fgrep likes to fail randomly?
 if [ -s "$git_is_stupid" ]; then
-	cat "$git_is_stupid" | xargs -i{} git diff --patch-with-stat $diff_opts "$base_rev" ${diff_committed_only:+"$name"} -- $cdup{}
+	cat "$git_is_stupid" | xargs -I{} git diff --patch-with-stat $diff_opts "$base_rev" ${diff_committed_only:+"$name"} -- $cdup{}
 else
 	echo "No changes."
 fi
