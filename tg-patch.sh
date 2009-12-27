@@ -46,18 +46,19 @@ base_rev="$(git rev-parse --short --verify "refs/top-bases/$name" 2>/dev/null)" 
 
 setup_pager
 
+cdup="$(git rev-parse --show-cdup)"
+
 cat_file "$topic:.topmsg"
 echo
 [ -n "$(git grep $diff_opts '^[-]--' ${diff_committed_only:+"$name"} -- "${cdup}.topmsg")" ] || echo '---'
 
 # Evil obnoxious hack to work around the lack of git diff --exclude
 git_is_stupid="$(mktemp -t tg-patch-changes.XXXXXX)"
-cdup="$(git rev-parse --show-cdup)"
 git diff --name-only $diff_opts "$base_rev" ${diff_committed_only:+"$name"} -- $cdup |
 	fgrep -vx ".topdeps" |
 	fgrep -vx ".topmsg" >"$git_is_stupid" || : # fgrep likes to fail randomly?
 if [ -s "$git_is_stupid" ]; then
-	cat "$git_is_stupid" | (cd $cdup ; xargs git diff --patch-with-stat $diff_opts "$base_rev" ${diff_committed_only:+"$name"} --)
+	cat "$git_is_stupid" | ([ -n "$cdup" ] && cd $cdup ; xargs git diff --patch-with-stat $diff_opts "$base_rev" ${diff_committed_only:+"$name"} --)
 else
 	echo "No changes."
 fi
