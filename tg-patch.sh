@@ -48,7 +48,7 @@ setup_pager
 
 cat_file "$topic:.topmsg"
 echo
-[ -n "$(git grep $diff_opts '^[-]--' ${diff_committed_only:+"$name"} -- ".topmsg")" ] || echo '---'
+[ -n "$(git grep $diff_opts '^[-]--' ${diff_committed_only:+"$name"} -- "${cdup}.topmsg")" ] || echo '---'
 
 # Evil obnoxious hack to work around the lack of git diff --exclude
 git_is_stupid="$(mktemp -t tg-patch-changes.XXXXXX)"
@@ -57,7 +57,7 @@ git diff --name-only $diff_opts "$base_rev" ${diff_committed_only:+"$name"} -- $
 	fgrep -vx ".topdeps" |
 	fgrep -vx ".topmsg" >"$git_is_stupid" || : # fgrep likes to fail randomly?
 if [ -s "$git_is_stupid" ]; then
-	cat "$git_is_stupid" | xargs -I{} git diff --patch-with-stat $diff_opts "$base_rev" ${diff_committed_only:+"$name"} -- $cdup{}
+	cat "$git_is_stupid" | (cd $cdup ; xargs git diff --patch-with-stat $diff_opts "$base_rev" ${diff_committed_only:+"$name"} --)
 else
 	echo "No changes."
 fi
