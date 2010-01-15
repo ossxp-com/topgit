@@ -7,6 +7,7 @@
 recurse_deps=true
 tgish_deps_only=false
 dry_run=
+push_all=false
 
 while [ -n "$1" ]; do
 	arg="$1"; shift
@@ -17,6 +18,8 @@ while [ -n "$1" ]; do
 		dry_run=--dry-run;;
 	--tgish-only)
 		tgish_deps_only=true;;
+	-a|--all)
+		push_all=true;;
 	-h|--help)
 		echo "Usage: tg push [--dry-run] [--no-deps] [--tgish-only] [-r remote] branch*"
 		exit 0;;
@@ -38,7 +41,18 @@ if [ -z "$remote" ]; then
 fi
 
 if [ -z "$branches" ]; then
-	branches="$(git symbolic-ref HEAD | sed 's#^refs/heads/##')"
+	if $push_all; then
+		branches="$( git for-each-ref refs/top-bases |
+			while read rev type ref; do
+				name="${ref#refs/top-bases/}"
+				if branch_annihilated "$name"; then
+					continue
+				fi
+        echo -n "$name "
+			done )"
+	else
+		branches="$(git symbolic-ref HEAD | sed 's#^refs/heads/##')"
+	fi
 fi
 
 for name in $branches; do

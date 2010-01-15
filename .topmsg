@@ -1,0 +1,6 @@
+From: Jiang Xin <jiangxin@moon.ossxp.com>
+Subject: [PATCH] t/tg_push_all
+
+tg push --all, can push all tg branch to remote git server.
+
+Signed-off-by: Jiang Xin <jiangxin@moon.ossxp.com>
