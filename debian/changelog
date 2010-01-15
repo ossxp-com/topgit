@@ -1,3 +1,9 @@
+topgit (0.8-1+ossxp7) unstable; urgency=low
+
+  * add --all support to tg patch.
+
+ -- Jiang Xin <jiangxin@ossxp.com>  Fri, 15 Jan 2010 13:30:16 +0800
+
 topgit (0.8-1+ossxp6) unstable; urgency=low
 
   * tg patch works under subdir.
