@@ -6,11 +6,11 @@ tg push --all, can push all tg branch to remote git server.
 Signed-off-by: Jiang Xin <jiangxin@moon.ossxp.com>
 
 ---
- tg-push.sh |   16 +++++++++++++++-
- 1 files changed, 15 insertions(+), 1 deletions(-)
+ tg-push.sh |   18 ++++++++++++++++--
+ 1 files changed, 16 insertions(+), 2 deletions(-)
 
 diff --git a/tg-push.sh b/tg-push.sh
-index cd208a0..9269686 100644
+index 199d738..b0cf5a1 100644
 --- a/tg-push.sh
 +++ b/tg-push.sh
 @@ -7,6 +7,7 @@
@@ -21,15 +21,18 @@ index cd208a0..9269686 100644
  
  while [ -n "$1" ]; do
  	arg="$1"; shift
-@@ -17,6 +18,8 @@ while [ -n "$1" ]; do
+@@ -17,8 +18,10 @@ while [ -n "$1" ]; do
  		dry_run=--dry-run;;
  	--tgish-only)
  		tgish_deps_only=true;;
 +	-a|--all)
 +		push_all=true;;
  	-h|--help)
- 		echo "Usage: tg push [--dry-run] [--no-deps] [--tgish-only] [-r remote] branch*"
+-		echo "Usage: tg push [--dry-run] [--no-deps] [--tgish-only] [-r remote] branch*"
++		echo "Usage: tg push [--dry-run] [--no-deps] [--tgish-only] [-r remote] [--all|branch*]"
  		exit 0;;
+ 	-r)
+ 		remote="$1"
 @@ -38,7 +41,18 @@ if [ -z "$remote" ]; then
  fi
  
@@ -51,4 +54,4 @@ index cd208a0..9269686 100644
  
  for name in $branches; do
 -- 
-tg: (341a371..) t/tg_push_all (depends on: tgmaster)
+tg: (29ab4cf..) t/tg_push_all (depends on: tgmaster)

@@ -12,10 +12,10 @@ Signed-off-by: Jiang Xin <jiangxin@ossxp.com>
  2 files changed, 25 insertions(+), 3 deletions(-)
 
 diff --git a/README b/README
-index 495c70b..017cead 100644
+index c418ff4..c9b60ad 100644
 --- a/README
 +++ b/README
-@@ -426,6 +426,9 @@ tg export
+@@ -437,6 +437,9 @@ tg export
  	a comma-separated explicit list of branches to export. This
  	mode of operation is currently not supported with collapse.
  
@@ -90,4 +90,4 @@ index a16c290..7e035a7 100644
  	(_ret=0; _dep="$name"; _name=""; _dep_is_tgish=1; driver)
  else
 -- 
-tg: (341a371..) t/export_quilt_all (depends on: tgmaster)
+tg: (29ab4cf..) t/export_quilt_all (depends on: tgmaster)

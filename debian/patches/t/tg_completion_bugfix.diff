@@ -23,4 +23,4 @@ index 0ee233c..8b39bef 100755
  		__tgcomp "$subcommands"
  		return
 -- 
-tg: (341a371..) t/tg_completion_bugfix (depends on: tgmaster)
+tg: (29ab4cf..) t/tg_completion_bugfix (depends on: tgmaster)

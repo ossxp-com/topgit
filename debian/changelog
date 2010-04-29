@@ -1,3 +1,9 @@
+topgit (0.8-1.1+ossxp7) unstable; urgency=low
+
+  * Upstream update.
+
+ -- Jiang Xin <jiangxin@ossxp.com>  Thu, 29 Apr 2010 13:30:31 +0800
+
 topgit (0.8-1+ossxp7) unstable; urgency=low
 
   * add --all support to tg patch.

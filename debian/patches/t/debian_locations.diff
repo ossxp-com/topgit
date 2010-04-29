@@ -45,10 +45,10 @@ index 3ce39a5..31cc98e 100644
  clean::
  	rm -f tg $(commands_out) $(hooks_out) $(help_out)
 diff --git a/tg.sh b/tg.sh
-index 1f6d3da..8e10497 100644
+index 9d08d63..a7ae479 100644
 --- a/tg.sh
 +++ b/tg.sh
-@@ -272,8 +272,8 @@ do_help()
+@@ -281,8 +281,8 @@ do_help()
  		setup_pager
  		@cmddir@/tg-$1 -h 2>&1 || :
  		echo
@@ -60,4 +60,4 @@ index 1f6d3da..8e10497 100644
  	else
  		echo "`basename $0`: no help for $1" 1>&2
 -- 
-tg: (341a371..) t/debian_locations (depends on: tgmaster)
+tg: (29ab4cf..) t/debian_locations (depends on: tgmaster)

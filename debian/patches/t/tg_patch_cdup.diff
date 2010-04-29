@@ -6,14 +6,14 @@ tg patch can run under subdir now.
 Signed-off-by: Jiang Xin <jiangxin@ossxp.com>
 
 ---
- tg-patch.sh |    8 +++++---
- 1 files changed, 5 insertions(+), 3 deletions(-)
+ tg-patch.sh |    9 +++++----
+ 1 files changed, 5 insertions(+), 4 deletions(-)
 
 diff --git a/tg-patch.sh b/tg-patch.sh
-index d701c54..bd26b35 100644
+index 7bafdfe..77589d3 100644
 --- a/tg-patch.sh
 +++ b/tg-patch.sh
-@@ -46,17 +46,19 @@ base_rev="$(git rev-parse --short --verify "refs/top-bases/$name" 2>/dev/null)"
+@@ -46,18 +46,19 @@ base_rev="$(git rev-parse --short --verify "refs/top-bases/$name" 2>/dev/null)"
  
  setup_pager
  
@@ -31,10 +31,11 @@ index d701c54..bd26b35 100644
  	fgrep -vx ".topdeps" |
  	fgrep -vx ".topmsg" >"$git_is_stupid" || : # fgrep likes to fail randomly?
  if [ -s "$git_is_stupid" ]; then
--	cat "$git_is_stupid" | xargs git diff --patch-with-stat $diff_opts "$base_rev" ${diff_committed_only:+"$name"} --
-+	cat "$git_is_stupid" | ([ -n "$cdup" ] && cd $cdup ; xargs git diff --patch-with-stat $diff_opts "$base_rev" ${diff_committed_only:+"$name"} --)
+-	cd "$root_dir"
+-	cat "$git_is_stupid" | xargs git diff -a --patch-with-stat $diff_opts "$base_rev" ${diff_committed_only:+"$name"} --
++	cat "$git_is_stupid" | ([ -n "$cdup" ] && cd $cdup ; xargs git diff -a --patch-with-stat $diff_opts "$base_rev" ${diff_committed_only:+"$name"} --)
  else
  	echo "No changes."
  fi
 -- 
-tg: (341a371..) t/tg_patch_cdup (depends on: tgmaster)
+tg: (29ab4cf..) t/tg_patch_cdup (depends on: tgmaster)
