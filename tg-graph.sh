@@ -55,8 +55,8 @@ done
 
 [ -z "$name" ] || name="-X \"$name\""
 
-[ -r "@sharedir@"/graph.gvpr ] || 
-	die "Can't find graph.gvpr file in \`@sharedir@'"
+[ -r "@cmddir@"/graph.gvpr ] || 
+	die "Can't find graph.gvpr file in \`@cmddir@'"
 
 [ "$header" = "header" -o "$body" = "body" ] &&
 	summary_graphviz=--graphviz=verbose
@@ -80,4 +80,4 @@ setup_pager
 $tg summary $summary_graphviz |
 	ccomps $name -x - |
 	gvpr -a "$color $stack $reverse $header $body $pointer" \
-	     -f "@sharedir@"/graph.gvpr
+	     -f "@cmddir@"/graph.gvpr
