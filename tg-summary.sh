@@ -100,7 +100,7 @@ git for-each-ref refs/top-bases |
 				ref_exists "refs/top-bases/$dep"  ||
 					dep_is_tgish=false
 				if ! "$dep_is_tgish" || ! branch_annihilated $dep; then
-					printf "\t\"%s\" -> \"%s\";\n" "$$name" "$dep"
+					printf "\t\"%s\" -> \"%s\";\n" "$name" "$dep"
 				fi
 			done
 			continue
