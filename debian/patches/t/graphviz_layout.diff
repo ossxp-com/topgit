@@ -6,38 +6,44 @@ Change node and layout style of graphviz output.
 Signed-off-by: Jiang <jiangxin@ossxp.com>
 
 ---
- tg-summary.sh |   13 ++++++++++++-
- 1 files changed, 12 insertions(+), 1 deletions(-)
+ tg-summary.sh |   25 ++++++++++++++++++-------
+ 1 files changed, 18 insertions(+), 7 deletions(-)
 
 diff --git a/tg-summary.sh b/tg-summary.sh
-index 50ee883..d2988fc 100644
+index 50ee883..9a81334 100644
 --- a/tg-summary.sh
 +++ b/tg-summary.sh
-@@ -37,13 +37,24 @@ if [ -n "$graphviz" ]; then
+@@ -36,13 +36,24 @@ if [ -n "$graphviz" ]; then
+ 
  digraph G {
  
- graph [
+-graph [
 -  rankdir = "TB"
-+  rankdir = "RL"
-   label="TopGit Layout\n\n\n"
-   fontsize = 14
-   labelloc=top
-   pad = "0.5,0.5"
- ];
+-  label="TopGit Layout\n\n\n"
+-  fontsize = 14
+-  labelloc=top
+-  pad = "0.5,0.5"
+-];
++	graph [
++		rankdir = RL
++		label="TopGit Layout\n\n\n"
++		fontsize = 14
++		labelloc=top
++		pad = "0.5,0.5"
++	];
++
++	node [
++		shape=box
++		fontsize = 12
++		fontcolor= blue
++		color= blue
++	];
++
++	edge [
++		color= green
++	];
  
-+edge [
-+  color= green
-+];
-+
-+node [
-+  shape=box
-+  fontsize = 12
-+  fontcolor= blue
-+  color= blue
-+];
-+
  EOT
  fi
- 
 -- 
 tg: (29ab4cf..) t/graphviz_layout (depends on: tgmaster)

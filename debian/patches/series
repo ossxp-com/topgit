@@ -3,5 +3,6 @@ t/export_quilt_all.diff -p1
 t/fast_tg_summary.diff -p1
 t/graphviz_layout.diff -p1
 t/tg_completion_bugfix.diff -p1
+t/tg_graph_ascii_output.diff -p1
 t/tg_patch_cdup.diff -p1
 t/tg_push_all.diff -p1

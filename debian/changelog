@@ -1,3 +1,9 @@
+topgit (0.8-1.1+ossxp9) unstable; urgency=low
+
+  * New tg-graph command.
+
+ -- Jiang Xin <jiangxin@ossxp.com>  Fri, 18 Jun 2010 15:04:28 +0800
+
 topgit (0.8-1.1+ossxp8) unstable; urgency=low
 
   * Change graphviz output layout and style.
