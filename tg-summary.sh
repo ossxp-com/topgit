@@ -5,7 +5,7 @@
 
 terse=
 graphviz=
-
+graphviz_verbose=
 
 ## Parse options
 
@@ -16,6 +16,9 @@ while [ -n "$1" ]; do
 		terse=1;;
 	--graphviz)
 		graphviz=1;;
+	--graphviz=verbose)
+		graphviz=1
+		graphviz_verbose=1;;
 	*)
 		echo "Usage: tg [...] summary [-t | --graphviz]" >&2
 		exit 1;;
@@ -50,6 +53,11 @@ fi
 
 ## List branches
 
+if [ -n "$graphviz_verbose" ]; then
+	tmpmsg="$(mktemp -t tg-summary.XXXXXX)"
+	trap 'rm -f "$tmpmsg"' 0
+fi
+
 git for-each-ref refs/top-bases |
 	while read rev type ref; do
 		name="${ref#refs/top-bases/}"
@@ -62,12 +70,37 @@ git for-each-ref refs/top-bases |
 			continue
 		fi
 		if [ -n "$graphviz" ]; then
+
+			if [ -n "$graphviz_verbose" ]; then
+				type="header"
+				lines=0
+				printf "\t\"%s\" [\n" "$name"
+				git cat-file blob "$name:.topmsg" > "$tmpmsg"
+				old_IFS="$IFS"
+				IFS=""
+				while read line; do
+					l="$(printf "%s" "$line" | sed -e 's/"/\\"/g')"
+					[ -z "$line" -a "$type" = "header" ] && {
+						type="body"
+						printf "\t\ttg_header_lines = \"%s\"\n" "$lines"
+						lines=0
+						continue
+					}
+					printf "\t\ttg_%s_%s = \"%s\"\n" "$type" "$lines" "$l"
+					lines=`expr $lines + 1`
+				done < "$tmpmsg"
+				IFS="$old_IFS"
+				[ $lines -gt 0 ] &&
+					printf "\t\ttg_%s_lines = \"%s\"\n" "$type" "$lines"
+				printf "\t];\n"
+			fi
+
 			git cat-file blob "$name:.topdeps" | while read dep; do
 				dep_is_tgish=true
 				ref_exists "refs/top-bases/$dep"  ||
 					dep_is_tgish=false
 				if ! "$dep_is_tgish" || ! branch_annihilated $dep; then
-					echo "\"$name\" -> \"$dep\";"
+					printf "\t\"%s\" -> \"%s\";\n" "$$name" "$dep"
 				fi
 			done
 			continue

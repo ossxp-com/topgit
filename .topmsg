@@ -1,0 +1,28 @@
+From: Bert Wesarg <bert.wesarg@googlemail.com>
+Subject: [PATCH] t/tg_graph_ascii_output
+
+Finally, I have managed to work on an old idea: to display the dependency graph
+line-by-line on the console.  The insiration comes from the git log --graph
+command, the implementation too.  I have ported the graph.c file from the
+GIT project into the GVPR graph processing language from the graphviz package.
+Thats why I have Cc'ed Adam, the original author of the GIT graph API and I
+would like to thank him for it.  But I must also apologize to him that I
+haven't gave him credit in this first patch (only here in the message).  Which
+should be done, before accepting into the topgit.git.
+
+Actually, this is still a proof-of-concept, because I'm uncertain wheather we
+need a new command for this or not.
+
+As you can see from the tg graph options, there is many you can tweak.  I think
+the dfs options gives compacter graphs for depending topics.  Dfs gives
+compacter graphs for the reversed dependencies (i.e. master as first line) for
+me too.  So dfs should probably the default.
+
+Please try.
+
+Thanks,
+Bert
+
+Reference: http://kerneltrap.org/mailarchive/git/2009/5/20/2922
+
+Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
