@@ -78,6 +78,6 @@ setup_pager
 	color="no-color"
 
 $tg summary $summary_graphviz |
-	ccomps -x $name |
+	ccomps $name -x - |
 	gvpr -a "$color $stack $reverse $header $body $pointer" \
 	     -f "@sharedir@"/graph.gvpr
