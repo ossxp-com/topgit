@@ -37,11 +37,22 @@ if [ -n "$graphviz" ]; then
 digraph G {
 
 graph [
-  rankdir = "TB"
+  rankdir = "RL"
   label="TopGit Layout\n\n\n"
   fontsize = 14
   labelloc=top
   pad = "0.5,0.5"
+];
+
+edge [
+  color= green
+];
+
+node [
+  shape=box
+  fontsize = 12
+  fontcolor= blue
+  color= blue
 ];
 
 EOT
