@@ -13,31 +13,33 @@ Info: Many tg command's bash completion calling __tg_topics to show topgit branc
 Signed-off-by: Jiang Xin <jiangxin@ossxp.com>
 
 ---
- tg-summary.sh |    8 ++++----
- 1 files changed, 4 insertions(+), 4 deletions(-)
+ tg-summary.sh |   12 +++++++-----
+ 1 files changed, 7 insertions(+), 5 deletions(-)
 
 diff --git a/tg-summary.sh b/tg-summary.sh
-index 50ee883..6a7e806 100644
+index af16888..f8dcd00 100644
 --- a/tg-summary.sh
 +++ b/tg-summary.sh
-@@ -53,14 +53,14 @@ fi
+@@ -107,13 +107,15 @@ fi
  git for-each-ref refs/top-bases |
  	while read rev type ref; do
  		name="${ref#refs/top-bases/}"
 -		if branch_annihilated "$name"; then
 -			continue;
--		fi;
+-		fi
 -
  		if [ -n "$terse" ]; then
  			echo "$name"
- 			continue
- 		fi
+-		elif [ -n "$graphviz$sort" ]; then
++			continue
++		fi
 +
 +		if branch_annihilated "$name"; then
 +			continue;
 +		fi;
- 		if [ -n "$graphviz" ]; then
++		if [ -n "$graphviz$sort" ]; then
  			git cat-file blob "$name:.topdeps" | while read dep; do
  				dep_is_tgish=true
+ 				ref_exists "refs/top-bases/$dep"  ||
 -- 
-tg: (29ab4cf..) t/fast_tg_summary (depends on: tgmaster)
+tg: (8b0f1f9..) t/fast_tg_summary (depends on: tgmaster)

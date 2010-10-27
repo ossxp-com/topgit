@@ -34,22 +34,22 @@ Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
  contrib/tg-completion.bash |   28 ++
  share/graph.gvpr           | 1083 ++++++++++++++++++++++++++++++++++++++++++++
  tg-graph.sh                |   83 ++++
- tg-summary.sh              |   37 ++-
- 7 files changed, 1238 insertions(+), 2 deletions(-)
+ tg-summary.sh              |   34 ++
+ 7 files changed, 1237 insertions(+), 0 deletions(-)
 
 diff --git a/.gitignore b/.gitignore
-index 2f6d991..2ae94ee 100644
+index 3298889..629581a 100644
 --- a/.gitignore
 +++ b/.gitignore
-@@ -5,6 +5,8 @@
+@@ -20,6 +20,8 @@
  /tg-delete.txt
  /tg-depend
  /tg-depend.txt
 +/tg-graph
 +/tg-graph.txt
- /tg-info
- /tg-info.txt
- /tg-mail
+ /tg-export
+ /tg-export.txt
+ /tg-import
 diff --git a/Makefile b/Makefile
 index 3ce39a5..107463f 100644
 --- a/Makefile
@@ -63,10 +63,10 @@ index 3ce39a5..107463f 100644
  	install -d -m 755 "$(DESTDIR)$(hooksdir)"
  	install $(hooks_out) "$(DESTDIR)$(hooksdir)"
 diff --git a/README b/README
-index c418ff4..3ac6e82 100644
+index 5ca0424..8b0affd 100644
 --- a/README
 +++ b/README
-@@ -497,6 +497,12 @@ tg push
+@@ -510,6 +510,12 @@ tg push
  	repository.  By default the remote gets all dependencies
  	(both tgish and non-tgish) and bases pushed to.
  
@@ -76,11 +76,11 @@ index c418ff4..3ac6e82 100644
 +
 +	TODO: fan-in and fan-out graphs
 +
- TODO: tg rename
- 
- 
+ tg base
+ ~~~~~~~
+ 	Prints the base commit of the current topic branch.  Silently
 diff --git a/contrib/tg-completion.bash b/contrib/tg-completion.bash
-index 0ee233c..be704dc 100755
+index ccf1a32..6c9daef 100755
 --- a/contrib/tg-completion.bash
 +++ b/contrib/tg-completion.bash
 @@ -302,6 +302,32 @@ _tg_export ()
@@ -116,7 +116,7 @@ index 0ee233c..be704dc 100755
  _tg_help ()
  {
  	local cur="${COMP_WORDS[COMP_CWORD]}"
-@@ -416,6 +442,7 @@ _tg_summary ()
+@@ -426,6 +452,7 @@ _tg_summary ()
  	*)
  		__tgcomp "
  			--graphviz
@@ -124,7 +124,7 @@ index 0ee233c..be704dc 100755
  			-t
  		"
  	esac
-@@ -467,6 +494,7 @@ _tg ()
+@@ -482,6 +509,7 @@ _tg ()
  	delete)      _tg_delete ;;
  	depend)      _tg_depend ;;
  	export)      _tg_export ;;
@@ -1311,29 +1311,28 @@ index 0000000..d2b22ef
 +	gvpr -a "$color $stack $reverse $header $body $pointer" \
 +	     -f "@cmddir@"/graph.gvpr
 diff --git a/tg-summary.sh b/tg-summary.sh
-index 50ee883..32fde79 100644
+index f8dcd00..cd62954 100644
 --- a/tg-summary.sh
 +++ b/tg-summary.sh
-@@ -5,7 +5,7 @@
+@@ -5,6 +5,7 @@
  
  terse=
  graphviz=
--
 +graphviz_verbose=
+ sort=
+ deps=
  
- ## Parse options
- 
-@@ -16,6 +16,9 @@ while [ -n "$1" ]; do
+@@ -18,6 +19,9 @@ while [ -n "$1" ]; do
  		terse=1;;
  	--graphviz)
  		graphviz=1;;
 +	--graphviz=verbose)
 +		graphviz=1
 +		graphviz_verbose=1;;
- 	*)
- 		echo "Usage: tg [...] summary [-t | --graphviz]" >&2
- 		exit 1;;
-@@ -50,6 +53,11 @@ fi
+ 	--sort)
+ 		sort=1;;
+ 	--deps)
+@@ -63,6 +67,11 @@ fi
  
  ## List branches
  
@@ -1342,13 +1341,13 @@ index 50ee883..32fde79 100644
 +	trap 'rm -f "$tmpmsg"' 0
 +fi
 +
- git for-each-ref refs/top-bases |
- 	while read rev type ref; do
- 		name="${ref#refs/top-bases/}"
-@@ -62,12 +70,37 @@ git for-each-ref refs/top-bases |
- 			continue
- 		fi
- 		if [ -n "$graphviz" ]; then
+ process_branch()
+ {
+ 	missing_deps=
+@@ -116,6 +125,31 @@ git for-each-ref refs/top-bases |
+ 			continue;
+ 		fi;
+ 		if [ -n "$graphviz$sort" ]; then
 +
 +			if [ -n "$graphviz_verbose" ]; then
 +				type="header"
@@ -1377,12 +1376,5 @@ index 50ee883..32fde79 100644
  			git cat-file blob "$name:.topdeps" | while read dep; do
  				dep_is_tgish=true
  				ref_exists "refs/top-bases/$dep"  ||
- 					dep_is_tgish=false
- 				if ! "$dep_is_tgish" || ! branch_annihilated $dep; then
--					echo "\"$name\" -> \"$dep\";"
-+					printf "\t\"%s\" -> \"%s\";\n" "$name" "$dep"
- 				fi
- 			done
- 			continue
 -- 
-tg: (29ab4cf..) t/tg_graph_ascii_output (depends on: tgmaster)
+tg: (82d5485..) t/tg_graph_ascii_output (depends on: t/fast_tg_summary)

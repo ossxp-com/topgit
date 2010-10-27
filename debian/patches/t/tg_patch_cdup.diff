@@ -38,4 +38,4 @@ index 7bafdfe..77589d3 100644
  	echo "No changes."
  fi
 -- 
-tg: (29ab4cf..) t/tg_patch_cdup (depends on: tgmaster)
+tg: (8b0f1f9..) t/tg_patch_cdup (depends on: tgmaster)

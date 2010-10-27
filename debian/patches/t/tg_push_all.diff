@@ -54,4 +54,4 @@ index 199d738..b0cf5a1 100644
  
  for name in $branches; do
 -- 
-tg: (29ab4cf..) t/tg_push_all (depends on: tgmaster)
+tg: (8b0f1f9..) t/tg_push_all (depends on: tgmaster)

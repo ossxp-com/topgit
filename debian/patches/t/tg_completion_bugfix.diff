@@ -10,7 +10,7 @@ Signed-off-by: Jiang Xin <jiangxin@ossxp.com>
  1 files changed, 1 insertions(+), 1 deletions(-)
 
 diff --git a/contrib/tg-completion.bash b/contrib/tg-completion.bash
-index 0ee233c..8b39bef 100755
+index ccf1a32..1870d9f 100755
 --- a/contrib/tg-completion.bash
 +++ b/contrib/tg-completion.bash
 @@ -268,7 +268,7 @@ _tg_delete ()
@@ -23,4 +23,4 @@ index 0ee233c..8b39bef 100755
  		__tgcomp "$subcommands"
  		return
 -- 
-tg: (29ab4cf..) t/tg_completion_bugfix (depends on: tgmaster)
+tg: (8b0f1f9..) t/tg_completion_bugfix (depends on: tgmaster)
