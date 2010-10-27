@@ -327,7 +327,7 @@ tg remote
 	and 'git push' to operate on them. (Do NOT use 'git push --all'
 	for your pushes - plain 'git push' will do the right thing.)
 
-	It takes a mandatory remote name argument, and optional
+	It takes a optional remote name argument, and optional
 	'--populate' switch - use that for your origin-style remote,
 	it will seed the local topic branch system based on the
 	remote topic branches. '--populate' will also make 'tg remote'
@@ -350,6 +350,17 @@ tg summary
 	terse list of topic branch names quickly. Alternately, you can
 	pass '--graphviz' to get a dot-suitable output to draw a dependency
 	graph between the topic branches.
+
+	You can also use the --sort option to sort the branches using
+	a topological sort.  This is especially useful if each
+	TopGit-tracked topic branch depends on a single parent branch,
+	since it will then print the branches in the dependency
+	order.  In more complex scenarios, a text graph view would be
+	much more useful, but that is not yet implemented.
+
+	The --deps option outputs dependency informations between
+	branches in a machine-readable format.  Feed this to "tsort"
+	to get the output from --sort.
 
 	TODO: Speed up by an order of magnitude
 	TODO: Text graph view
@@ -475,12 +486,14 @@ tg import
 
 tg update
 ~~~~~~~~~
-	Update the current topic branch wrt. changes in the branches
-	it depends on and remote branches.
+	Update the current or specified topic branch wrt. changes in the
+	branches it depends on and remote branches.
 	This is performed in two phases - first,
 	changes within the dependencies are merged to the base,
 	then the base is merged into the topic branch.
 	The output will guide you in case of conflicts.
+
+	After the update the current branch is the specified one.
 
 	In case your dependencies are not up-to-date, tg update
 	will first recurse into them and update these.
@@ -499,6 +512,21 @@ tg push
 	pushes a TopGit-controlled topic branch to a remote
 	repository.  By default the remote gets all dependencies
 	(both tgish and non-tgish) and bases pushed to.
+
+tg base
+~~~~~~~
+	Prints the base commit of the current topic branch.  Silently
+	exits with exit code 1 if you are not working on a TopGit
+	branch.
+
+tg log
+~~~~~~
+	Prints the git log of the named topgit branch.
+
+	Note: if you have shared the TopGit branch, this command
+	only lists the commits that were made in the current
+	repository, so you will not see work done by your
+	collaborators.
 
 TODO: tg rename
 
@@ -599,3 +627,13 @@ All commands by default refer to the remote that 'tg remote --populate'
 was called on the last time ('topgit.remote' configuration variable). You can
 manually run any command with a different base remote by passing '-r REMOTE'
 _before_ the subcommand name.
+
+
+POINTERS
+--------
+
+The following references are useful to understand the development of topgit and
+its subcommands.
+
+tg depend:
+  http://lists-archives.org/git/688698-add-list-and-rm-sub-commands-to-tg-depend.html
