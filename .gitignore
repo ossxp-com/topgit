@@ -1,4 +1,19 @@
+# Emacs auto-save files
+*~
+
+# vim swap files
+.*.swp
+
+# quilt working directory
+/.pc
+
+# .deb build stamp
+/build-stamp
+
 /hooks/pre-commit
+/tg
+/tg-base
+/tg-base.txt
 /tg-create
 /tg-create.txt
 /tg-delete
@@ -7,29 +22,23 @@
 /tg-depend.txt
 /tg-graph
 /tg-graph.txt
-/tg-info
-/tg-info.txt
-/tg-mail
-/tg-mail.txt
-/tg-patch
-/tg-patch.txt
-/tg-summary
-/tg-summary.txt
-/tg-update
-/tg-update.txt
 /tg-export
 /tg-export.txt
 /tg-import
 /tg-import.txt
-/tg-remote
-/tg-remote.txt
+/tg-info
+/tg-info.txt
+/tg-mail
+/tg-mail.txt
+/tg-log
+/tg-log.txt
+/tg-patch
+/tg-patch.txt
 /tg-push
 /tg-push.txt
-/tg
-.*.swp
-
-# quilt working directory
-/.pc
-
-# .deb build stamp
-/build-stamp
+/tg-remote
+/tg-remote.txt
+/tg-summary
+/tg-summary.txt
+/tg-update
+/tg-update.txt

@@ -370,6 +370,16 @@ _tg_info ()
 	esac
 }
 
+_tg_log ()
+{
+	local cur="${COMP_WORDS[COMP_CWORD]}"
+
+	case "$cur" in
+	*)
+		__tgcomp "$(__tg_topics)"
+	esac
+}
+
 _tg_mail ()
 {
 	local cur="${COMP_WORDS[COMP_CWORD]}"
@@ -450,7 +460,12 @@ _tg_summary ()
 
 _tg_update ()
 {
-	COMPREPLY=()
+	local cur="${COMP_WORDS[COMP_CWORD]}"
+
+	case "$cur" in
+	*)
+		__tgcomp "$(__tg_topics)"
+	esac
 }
 
 ### }}}
@@ -498,6 +513,7 @@ _tg ()
 	help)        _tg_help ;;
 	import)      _tg_import ;;
 	info)        _tg_info ;;
+	log)         _tg_log ;;
 	mail)        _tg_mail ;;
 	patch)       _tg_patch ;;
 	push)        _tg_push ;;
