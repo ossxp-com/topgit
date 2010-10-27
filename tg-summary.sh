@@ -9,6 +9,7 @@ graphviz_verbose=
 sort=
 deps=
 
+
 ## Parse options
 
 while [ -n "$1" ]; do
@@ -115,14 +116,14 @@ fi
 git for-each-ref refs/top-bases |
 	while read rev type ref; do
 		name="${ref#refs/top-bases/}"
-		if branch_annihilated "$name"; then
-			continue;
-		fi
-
 		if [ -n "$terse" ]; then
 			echo "$name"
 			continue
 		fi
+
+		if branch_annihilated "$name"; then
+			continue;
+		fi;
 		if [ -n "$graphviz$sort" ]; then
 
 			if [ -n "$graphviz_verbose" ]; then
