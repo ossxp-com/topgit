@@ -1,0 +1,5 @@
+*.sh      eol=lf
+*.bash    eol=lf
+Makefile  eol=lf
+series    eol=lf
+*.diff    eol=lf
