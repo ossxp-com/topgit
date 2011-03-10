@@ -134,7 +134,6 @@ git for-each-ref refs/top-bases |
 				type="header"
 				lines=0
 				printf "\t\"%s\" [\n" "$name"
-				git cat-file blob "$name:.topmsg" > "$tmpmsg"
 				old_IFS="$IFS"
 				IFS=""
 				while read line; do

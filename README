@@ -526,12 +526,6 @@ tg push
 	repository.  By default the remote gets all dependencies
 	(both tgish and non-tgish) and bases pushed to.
 
-tg graph
-~~~~~~~~
-	Prints the dependency graph like git log --graph to the console.
-
-	TODO: fan-in and fan-out graphs
-
 tg base
 ~~~~~~~
 	Prints the base commit of the current topic branch.  Silently
