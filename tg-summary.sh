@@ -8,13 +8,16 @@ graphviz=
 graphviz_verbose=
 sort=
 deps=
-
+head_from=
 
 ## Parse options
 
 while [ -n "$1" ]; do
 	arg="$1"; shift
 	case "$arg" in
+	-i|-w)
+		[ -z "$head_from" ] || die "-i and -w are mutually exclusive"
+		head_from="$arg";;
 	-t)
 		terse=1;;
 	--graphviz)
@@ -27,7 +30,7 @@ while [ -n "$1" ]; do
 	--deps)
 		deps=1;;
 	*)
-		echo "Usage: tg [...] summary [-t | --sort | --deps | --graphviz]" >&2
+		echo "Usage: tg [...] summary [-t | --sort | --deps | --graphviz] [-i | -w]" >&2
 		exit 1;;
 	esac
 done
@@ -59,10 +62,9 @@ EOT
 fi
 
 if [ -n "$sort" ]; then
-	tsort_input=`mktemp`
+	tsort_input="$(get_temp tg-summary-sort)"
 	exec 4>$tsort_input
 	exec 5<$tsort_input
-	rm $tsort_input
 fi
 
 ## List branches
@@ -78,8 +80,11 @@ process_branch()
 
 	current=' '
 	[ "$name" != "$curname" ] || current='>'
+	from=$head_from
+	[ "$name" = "$curname" ] ||
+		from=
 	nonempty=' '
-	! branch_empty "$name" || nonempty='0'
+	! branch_empty "$name" $from || nonempty='0'
 	remote=' '
 	[ -z "$base_remote" ] || remote='l'
 	! has_remote "$name" || remote='r'
@@ -98,7 +103,7 @@ process_branch()
 	branch_contains "$name" "refs/top-bases/$name" || base_update='B'
 
 	if [ "$(git rev-parse "$name")" != "$rev" ]; then
-		subject="$(git cat-file blob "$name:.topmsg" | sed -n 's/^Subject: //p')"
+		subject="$(cat_file "$name:.topmsg" $from | sed -n 's/^Subject: //p')"
 	else
 		# No commits yet
 		subject="(No commits)"
@@ -109,7 +114,7 @@ process_branch()
 }
 
 if [ -n "$deps" ]; then
-	list_deps
+	list_deps $head_from
 	exit 0
 fi
 
@@ -125,7 +130,6 @@ git for-each-ref refs/top-bases |
 			continue;
 		fi;
 		if [ -n "$graphviz$sort" ]; then
-
 			if [ -n "$graphviz_verbose" ]; then
 				type="header"
 				lines=0
@@ -150,7 +154,10 @@ git for-each-ref refs/top-bases |
 				printf "\t];\n"
 			fi
 
-			git cat-file blob "$name:.topdeps" | while read dep; do
+			from=$head_from
+			[ "$name" = "$curname" ] ||
+				from=
+			cat_file "$name:.topdeps" $from | while read dep; do
 				dep_is_tgish=true
 				ref_exists "refs/top-bases/$dep"  ||
 					dep_is_tgish=false
