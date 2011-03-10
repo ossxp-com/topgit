@@ -10,7 +10,7 @@ Signed-off-by: Jiang Xin <jiangxin@moon.ossxp.com>
  1 files changed, 16 insertions(+), 2 deletions(-)
 
 diff --git a/tg-push.sh b/tg-push.sh
-index 199d738..b0cf5a1 100644
+index a928fba..744d0e4 100644
 --- a/tg-push.sh
 +++ b/tg-push.sh
 @@ -7,6 +7,7 @@
@@ -54,4 +54,4 @@ index 199d738..b0cf5a1 100644
  
  for name in $branches; do
 -- 
-tg: (8b0f1f9..) t/tg_push_all (depends on: tgmaster)
+tg: (d279e29..) t/tg_push_all (depends on: tgmaster)

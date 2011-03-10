@@ -17,10 +17,10 @@ Signed-off-by: Jiang Xin <jiangxin@ossxp.com>
  1 files changed, 7 insertions(+), 5 deletions(-)
 
 diff --git a/tg-summary.sh b/tg-summary.sh
-index af16888..f8dcd00 100644
+index 1c99e22..0c34363 100644
 --- a/tg-summary.sh
 +++ b/tg-summary.sh
-@@ -107,13 +107,15 @@ fi
+@@ -112,13 +112,15 @@ fi
  git for-each-ref refs/top-bases |
  	while read rev type ref; do
  		name="${ref#refs/top-bases/}"
@@ -38,8 +38,8 @@ index af16888..f8dcd00 100644
 +			continue;
 +		fi;
 +		if [ -n "$graphviz$sort" ]; then
- 			git cat-file blob "$name:.topdeps" | while read dep; do
- 				dep_is_tgish=true
- 				ref_exists "refs/top-bases/$dep"  ||
+ 			from=$head_from
+ 			[ "$name" = "$curname" ] ||
+ 				from=
 -- 
-tg: (8b0f1f9..) t/fast_tg_summary (depends on: tgmaster)
+tg: (d279e29..) t/fast_tg_summary (depends on: tgmaster)

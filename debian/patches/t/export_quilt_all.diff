@@ -12,10 +12,10 @@ Signed-off-by: Jiang Xin <jiangxin@ossxp.com>
  2 files changed, 25 insertions(+), 3 deletions(-)
 
 diff --git a/README b/README
-index 5ca0424..36ab515 100644
+index ed8d358..be17de2 100644
 --- a/README
 +++ b/README
-@@ -448,6 +448,9 @@ tg export
+@@ -464,6 +464,9 @@ tg export
  	a comma-separated explicit list of branches to export. This
  	mode of operation is currently not supported with collapse.
  
@@ -26,7 +26,7 @@ index 5ca0424..36ab515 100644
  	branch.  So usually they end up in subdirectories of the output
  	directory.  With option '--flatten' the names are mangled such that
 diff --git a/tg-export.sh b/tg-export.sh
-index 6d82d55..6f579c3 100644
+index 486ec94..13401b7 100644
 --- a/tg-export.sh
 +++ b/tg-export.sh
 @@ -9,6 +9,7 @@ output=
@@ -70,7 +70,7 @@ index 6d82d55..6f579c3 100644
  	# this check is only needed when no branches have been passed
  	name="$(git symbolic-ref HEAD | sed 's#^refs/heads/##')"
  	base_rev="$(git rev-parse --short --verify "refs/top-bases/$name" 2>/dev/null)" ||
-@@ -280,7 +289,17 @@ driver()
+@@ -270,7 +279,17 @@ driver()
  
  # Call driver on all the branches - this will happen
  # in topological order.
@@ -90,4 +90,4 @@ index 6d82d55..6f579c3 100644
  	(_ret=0; _dep="$name"; _name=""; _dep_is_tgish=1; driver)
  else
 -- 
-tg: (8b0f1f9..) t/export_quilt_all (depends on: tgmaster)
+tg: (d279e29..) t/export_quilt_all (depends on: tgmaster)

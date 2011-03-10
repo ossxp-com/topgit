@@ -10,10 +10,10 @@ Signed-off-by: Jiang <jiangxin@ossxp.com>
  1 files changed, 18 insertions(+), 7 deletions(-)
 
 diff --git a/tg-summary.sh b/tg-summary.sh
-index af16888..818113c 100644
+index 1c99e22..8dd6094 100644
 --- a/tg-summary.sh
 +++ b/tg-summary.sh
-@@ -43,13 +43,24 @@ if [ -n "$graphviz" ]; then
+@@ -46,13 +46,24 @@ if [ -n "$graphviz" ]; then
  
  digraph G {
  
@@ -46,4 +46,4 @@ index af16888..818113c 100644
  EOT
  fi
 -- 
-tg: (8b0f1f9..) t/graphviz_layout (depends on: tgmaster)
+tg: (d279e29..) t/graphviz_layout (depends on: tgmaster)
