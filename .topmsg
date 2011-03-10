@@ -3,4 +3,6 @@ Subject: [PATCH] t/tg_patch_cdup
 
 tg patch can run under subdir now.
 
+Note: upstream commit d245df9 fixed this using another approach.
+
 Signed-off-by: Jiang Xin <jiangxin@ossxp.com>
