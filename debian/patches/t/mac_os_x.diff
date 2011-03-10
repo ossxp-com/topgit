@@ -1,0 +1,45 @@
+From: Jiang Xin <jiangxin@ossxp.com>
+Subject: [PATCH] t/mac_os_x
+
+Resolve Mac OS X compatible issue.
+
+Signed-off-by: Jiang Xin <jiangxin@ossxp.com>
+
+---
+ tg-patch.sh |    2 +-
+ tg.sh       |    7 +++++++
+ 2 files changed, 8 insertions(+), 1 deletions(-)
+
+diff --git a/tg-patch.sh b/tg-patch.sh
+index 9def6e5..06ef36a 100644
+--- a/tg-patch.sh
++++ b/tg-patch.sh
+@@ -74,7 +74,7 @@ else
+ fi
+ 
+ echo '-- '
+-echo "tg: ($base_rev..) $name (depends on: $(cat_file "$name:.topdeps" $head_from | paste -s -d' '))"
++echo "tg: ($base_rev..) $name (depends on: $(cat_file "$name:.topdeps" $head_from | paste -s -d' ' -))"
+ branch_contains "$name" "$base_rev" ||
+ 	echo "tg: The patch is out-of-date wrt. the base! Run \`$tg update\`."
+ 
+diff --git a/tg.sh b/tg.sh
+index 9082d88..c374ad5 100644
+--- a/tg.sh
++++ b/tg.sh
+@@ -432,6 +432,13 @@ get_temp()
+ set -e
+ git_dir="$(git rev-parse --git-dir)"
+ root_dir="$(git rev-parse --show-cdup)"; root_dir="${root_dir:-.}"
++# Compatible issue, use gnu sed, gnu echo if there is one.
++sed --version >/dev/null 2>&1 ||
++	gsed --version >/dev/null 2>&1 && alias sed=gsed ||
++	die "Toggit needs GNU sed. Please install GNU sed as gsed."
++[ -z "`echo -n`" ] ||
++	[ -z "`gecho -n`" ] && alias echo=gecho ||
++	die "Toggit needs GNU echo. Please install GNU echo as gecho."
+ # Make sure root_dir doesn't end with a trailing slash.
+ root_dir="${root_dir%/}"
+ base_remote="$(git config topgit.remote 2>/dev/null)" || :
+-- 
+tg: (d279e29..) t/mac_os_x (depends on: tgmaster)
