@@ -1,0 +1,6 @@
+From: Jiang Xin <jiangxin@ossxp.com>
+Subject: [PATCH] t/mac_os_x
+
+Resolve Mac OS X compatible issue.
+
+Signed-off-by: Jiang Xin <jiangxin@ossxp.com>
