@@ -10,7 +10,7 @@ Signed-off-by: Jiang Xin <jiangxin@moon.ossxp.com>
  1 files changed, 16 insertions(+), 2 deletions(-)
 
 diff --git a/tg-push.sh b/tg-push.sh
-index a928fba..744d0e4 100644
+index a928fba..debd562 100644
 --- a/tg-push.sh
 +++ b/tg-push.sh
 @@ -7,6 +7,7 @@
@@ -45,7 +45,7 @@ index a928fba..744d0e4 100644
 +				if branch_annihilated "$name"; then
 +					continue
 +				fi
-+        echo -n "$name "
++        printf "$name "
 +			done )"
 +	else
 +		branches="$(git symbolic-ref HEAD | sed 's#^refs/heads/##')"
