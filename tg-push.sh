@@ -48,7 +48,7 @@ if [ -z "$branches" ]; then
 				if branch_annihilated "$name"; then
 					continue
 				fi
-        echo -n "$name "
+        printf "$name "
 			done )"
 	else
 		branches="$(git symbolic-ref HEAD | sed 's#^refs/heads/##')"
