@@ -1,11 +1,11 @@
-topgit (0.8-2+ossxp10) unstable; urgency=low
+topgit (0.8-2+ossxp11) unstable; urgency=low
 
   * Upstream upgrade. (2010-12-26)
     New subcommand: tg next, tg prev and tg files.
 
   * Add Mac OS X support.
 
- -- Jiang Xin <jiangxin@ossxp.com>  Sun, 13 Mar 2011 15:49:36 +0800
+ -- Jiang Xin <jiangxin@ossxp.com>  Thu, 07 Apr 2011 10:45:09 +0800
 
 topgit (0.8-2+ossxp9) unstable; urgency=low
 

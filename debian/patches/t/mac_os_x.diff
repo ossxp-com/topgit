@@ -8,8 +8,8 @@ Signed-off-by: Jiang Xin <jiangxin@ossxp.com>
 ---
  tg-info.sh  |    6 +++---
  tg-patch.sh |    2 +-
- tg.sh       |    4 ++++
- 3 files changed, 8 insertions(+), 4 deletions(-)
+ tg.sh       |    8 ++++++++
+ 3 files changed, 12 insertions(+), 4 deletions(-)
 
 diff --git a/tg-info.sh b/tg-info.sh
 index 10e257e..be319c7 100644
@@ -43,17 +43,21 @@ index 9def6e5..06ef36a 100644
  	echo "tg: The patch is out-of-date wrt. the base! Run \`$tg update\`."
  
 diff --git a/tg.sh b/tg.sh
-index 9082d88..e10caaa 100644
+index 9082d88..e69c3f8 100644
 --- a/tg.sh
 +++ b/tg.sh
-@@ -432,6 +432,10 @@ get_temp()
+@@ -432,6 +432,14 @@ get_temp()
  set -e
  git_dir="$(git rev-parse --git-dir)"
  root_dir="$(git rev-parse --show-cdup)"; root_dir="${root_dir:-.}"
 +# Compatible issue, use gnu sed if there is one.
-+sed --version >/dev/null 2>&1 ||
-+	gsed --version >/dev/null 2>&1 && alias sed=gsed ||
-+	die "Toggit needs GNU sed. Please install GNU sed as gsed."
++if ! sed --version >/dev/null 2>&1; then
++	if gsed --version >/dev/null 2>&1; then 
++		alias sed=gsed
++	else
++		die "Toggit needs GNU sed. Please install GNU sed as gsed."
++	fi
++fi
  # Make sure root_dir doesn't end with a trailing slash.
  root_dir="${root_dir%/}"
  base_remote="$(git config topgit.remote 2>/dev/null)" || :
