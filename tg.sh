@@ -433,9 +433,13 @@ set -e
 git_dir="$(git rev-parse --git-dir)"
 root_dir="$(git rev-parse --show-cdup)"; root_dir="${root_dir:-.}"
 # Compatible issue, use gnu sed if there is one.
-sed --version >/dev/null 2>&1 ||
-	gsed --version >/dev/null 2>&1 && alias sed=gsed ||
-	die "Toggit needs GNU sed. Please install GNU sed as gsed."
+if ! sed --version >/dev/null 2>&1; then
+	if gsed --version >/dev/null 2>&1; then 
+		alias sed=gsed
+	else
+		die "Toggit needs GNU sed. Please install GNU sed as gsed."
+	fi
+fi
 # Make sure root_dir doesn't end with a trailing slash.
 root_dir="${root_dir%/}"
 base_remote="$(git config topgit.remote 2>/dev/null)" || :
