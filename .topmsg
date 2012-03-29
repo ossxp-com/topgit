@@ -1,0 +1,10 @@
+From: Jiang Xin <worldhello.net@gmail.com>
+Subject: [PATCH] No stop to edit for the new merge behavior of git
+
+In Git 1.7.10, Merge will stop and wait for a merge commit log. This
+backward-incompatible improvement that will break topgit. To fix it,
+just export GIT_MERGE_AUTOEDIT=no.
+
+See: http://git-blame.blogspot.jp/2012/02/anticipating-git-1710.html
+
+Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
