@@ -14,7 +14,7 @@ Signed-off-by: Jiang Xin <jiangxin@ossxp.com>
 
 ---
  tg-summary.sh |   12 +++++++-----
- 1 files changed, 7 insertions(+), 5 deletions(-)
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
 diff --git a/tg-summary.sh b/tg-summary.sh
 index 1c99e22..0c34363 100644

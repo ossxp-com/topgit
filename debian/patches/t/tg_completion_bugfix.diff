@@ -7,7 +7,7 @@ Signed-off-by: Jiang Xin <jiangxin@ossxp.com>
 
 ---
  contrib/tg-completion.bash |    2 +-
- 1 files changed, 1 insertions(+), 1 deletions(-)
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/contrib/tg-completion.bash b/contrib/tg-completion.bash
 index e34b66f..eb37a66 100755

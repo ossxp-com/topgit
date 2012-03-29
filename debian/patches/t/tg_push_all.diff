@@ -7,7 +7,7 @@ Signed-off-by: Jiang Xin <jiangxin@moon.ossxp.com>
 
 ---
  tg-push.sh |   18 ++++++++++++++++--
- 1 files changed, 16 insertions(+), 2 deletions(-)
+ 1 file changed, 16 insertions(+), 2 deletions(-)
 
 diff --git a/tg-push.sh b/tg-push.sh
 index a928fba..debd562 100644

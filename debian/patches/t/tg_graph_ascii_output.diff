@@ -34,7 +34,7 @@ Signed-off-by: Bert Wesarg <bert.wesarg@googlemail.com>
  share/graph.gvpr           | 1083 ++++++++++++++++++++++++++++++++++++++++++++
  tg-graph.sh                |   83 ++++
  tg-summary.sh              |   32 ++
- 6 files changed, 1229 insertions(+), 0 deletions(-)
+ 6 files changed, 1229 insertions(+)
 
 diff --git a/.gitignore b/.gitignore
 index 6cfab6e..8010000 100644
