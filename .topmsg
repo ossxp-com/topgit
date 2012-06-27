@@ -1,0 +1,9 @@
+From: Jiang Xin <worldhello.net@gmail.com>
+Subject: [PATCH] When delete branch, delete it's remote couterparts
+
+When delete topic branch, delete it's remote conterparts using:
+
+    git push origin :refs/heads/t/topic
+    git push origin :refs/top-bases/t/topic
+
+Signed-off-by: Jiang Xin <worldhello.net@gmail.com>

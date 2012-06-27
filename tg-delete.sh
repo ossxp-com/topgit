@@ -46,4 +46,16 @@ baserev="$(git rev-parse --verify "refs/top-bases/$name" 2>/dev/null)" ||
 git update-ref -d "refs/top-bases/$name" "$baserev"
 [ -z "$branchrev" ] || git update-ref -d "refs/heads/$name" "$branchrev"
 
+## Wipe out remote branches
+
+if git rev-parse --verify -q "refs/remotes/$base_remote/top-bases/$name" >/dev/null; then
+	info "Delete remote branch: refs/top-bases/$name"
+	git push $base_remote :"refs/top-bases/$name"
+fi
+
+if git rev-parse --verify -q "refs/remotes/$base_remote/$name" >/dev/null; then
+	info "Delete remote branch: refs/heads/$name"
+	git push $base_remote :"refs/heads/$name"
+fi
+
 # vim:noet
