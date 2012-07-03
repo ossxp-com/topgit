@@ -1,4 +1,5 @@
 t/debian_locations.diff -p1
+t/delete-remote-branch.diff -p1
 t/export_quilt_all.diff -p1
 t/fast_tg_summary.diff -p1
 t/git-merge-no-edit.diff -p1

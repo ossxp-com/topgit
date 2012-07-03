@@ -1,3 +1,10 @@
+topgit (0.8-2+ossxp13) unstable; urgency=low
+
+  * New patch: t/delete-remote-branch
+    Delete it's conterparts from remote when delete feature branch.
+
+ -- Jiang Xin <worldhello.net@gmail.com>  Tue, 03 Jul 2012 13:46:11 +0800
+
 topgit (0.8-2+ossxp12) unstable; urgency=low
 
   * New patch: t/git-merge-no-edit
