@@ -1,0 +1,15 @@
+From: Jiang Xin <worldhello.net@gmail.com>
+Subject: [PATCH] prune stale remote branch when update
+
+Prune stale remote branch when running "tg remote --populate origin"
+(using "git fetch --prune refspecs ...").
+
+The order of refspecs for "git fetch --prune" is important, because
+both heads and top-bases are mapped under the same namespace
+"refs/remotes/$name/". If the refspecs are in wrong order, stale refs
+reverse lookup would fail, i.e. "refs/remotes/origin/top-bases/t/XX"
+would reverse lookup as "refs/heads/top-bases/t/XX", not
+"refs/top-bases/t/XX", and "refs/remotes/$name/top-bases/*" would be
+deleted by accident.
+
+Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
