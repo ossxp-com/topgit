@@ -5,6 +5,7 @@ t/fast_tg_summary.diff -p1
 t/git-merge-no-edit.diff -p1
 t/graphviz_layout.diff -p1
 t/mac_os_x.diff -p1
+t/prune-stale-remote-branch.diff -p1
 t/tg_completion_bugfix.diff -p1
 t/tg_graph_ascii_output.diff -p1
 t/tg_push_all.diff -p1

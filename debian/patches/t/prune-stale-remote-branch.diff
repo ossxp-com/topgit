@@ -1,0 +1,44 @@
+From: Jiang Xin <worldhello.net@gmail.com>
+Subject: [PATCH] prune stale remote branch when update
+
+Prune stale remote branch when running "tg remote --populate origin"
+(using "git fetch --prune refspecs ...").
+
+The order of refspecs for "git fetch --prune" is important, because
+both heads and top-bases are mapped under the same namespace
+"refs/remotes/$name/". If the refspecs are in wrong order, stale refs
+reverse lookup would fail, i.e. "refs/remotes/origin/top-bases/t/XX"
+would reverse lookup as "refs/heads/top-bases/t/XX", not
+"refs/top-bases/t/XX", and "refs/remotes/$name/top-bases/*" would be
+deleted by accident.
+
+Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
+
+---
+ tg-remote.sh |   11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
+
+diff --git a/tg-remote.sh b/tg-remote.sh
+index 61774d7..c99eed0 100644
+--- a/tg-remote.sh
++++ b/tg-remote.sh
+@@ -50,7 +50,16 @@ fi
+ 
+ info "Populating local topic branches from remote '$name'..."
+ 
+-git fetch "$name"
++## The order of refspecs is very important, because both heads and
++## top-bases are mapped under the same namespace refs/remotes/$name.
++## If we put the 2nd refspec before the 1st one, stale refs reverse
++## lookup would fail and "refs/remotes/$name/top-bases/XX" reverse
++## lookup as a non-exist "refs/heads/top-bases/XX", and  would be
++## deleted by accident.
++git fetch --prune "$name" \
++	"+refs/top-bases/*:refs/remotes/$name/top-bases/*" \
++	"+refs/heads/*:refs/remotes/$name/*"
++
+ git for-each-ref "refs/remotes/$name/top-bases" |
+ 	while read rev type ref; do
+ 		branch="${ref#refs/remotes/$name/top-bases/}"
+-- 
+tg: (d279e29..) t/prune-stale-remote-branch (depends on: tgmaster)

@@ -1,3 +1,10 @@
+topgit (0.8-2+ossxp14) unstable; urgency=low
+
+  * New patch: t/prune-stale-remote-branch
+    Remove stale remote branch when running "tg remote --populate origin"
+
+ -- Jiang Xin <worldhello.net@gmail.com>  Thu, 05 Jul 2012 22:34:06 +0800
+
 topgit (0.8-2+ossxp13) unstable; urgency=low
 
   * New patch: t/delete-remote-branch
