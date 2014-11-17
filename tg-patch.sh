@@ -70,7 +70,7 @@ t_tree=$(pretty_tree "$name" $head_from)
 if [ $b_tree = $t_tree ]; then
 	echo "No changes."
 else
-	git diff-tree -p --stat $b_tree $t_tree
+	git diff-tree -p --stat --binary $b_tree $t_tree
 fi
 
 echo '-- '

@@ -1,0 +1,7 @@
+From: Jiang Xin <worldhello.net@gmail.com>
+Subject: [PATCH] Save diff of binary files in patch
+
+Add `--binary` option for git-diff-tree, so that diff of binary files will
+be saved to patch file.
+
+Signed-off-by: Jiang Xin <worldhello.net@gmail.com>
